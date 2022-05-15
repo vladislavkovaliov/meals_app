@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/mocks_categories.dart';
 
 class CategotyMealsScreen extends StatelessWidget {
   final String categotyId;
@@ -21,12 +22,18 @@ class CategotyMealsScreen extends StatelessWidget {
       backgroundColor: categoryColor,
     );
 
+    final meals =
+        mockMeals.where((x) => x.categories.contains(categotyId)).toList();
+
     return Scaffold(
       appBar: appBar,
-      body: const SizedBox(
-        child: Text(
-          'Category Meals',
-        ),
+      body: ListView.builder(
+        itemBuilder: (ctx, index) {
+          return Text(
+            meals[index].title,
+          );
+        },
+        itemCount: meals.length,
       ),
     );
   }
