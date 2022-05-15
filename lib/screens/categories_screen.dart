@@ -25,6 +25,7 @@ class CategoriesScreen extends StatelessWidget {
       children: mockCategories
           .map((c) => CategoryItem(
                 key: ValueKey(c.id),
+                id: c.id,
                 title: c.title,
                 color: c.color,
               ))
