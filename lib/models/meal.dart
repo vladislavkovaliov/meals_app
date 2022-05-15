@@ -14,6 +14,7 @@ class Meal {
   final String id;
   final String title;
   final String imageUrl;
+
   final int duration;
 
   final List<String> categories;

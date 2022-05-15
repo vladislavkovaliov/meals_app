@@ -4,6 +4,7 @@ import 'package:meals_app/screens/category_meals_screen.dart';
 class CategoryItem extends StatelessWidget {
   final String id;
   final String title;
+
   final Color color;
 
   const CategoryItem({
