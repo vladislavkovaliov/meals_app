@@ -7,7 +7,7 @@ class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
 
   void handleMeals(BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) {
           return TabsScreen();
@@ -17,7 +17,7 @@ class MainDrawer extends StatelessWidget {
   }
 
   void handleFilters(BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) {
           return FiltersScreen();
