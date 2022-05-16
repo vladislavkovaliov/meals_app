@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/screens/categories_screen.dart';
+import 'package:meals_app/screens/filters_screen.dart';
+import 'package:meals_app/screens/tabs_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
 
-  void handleTap(BuildContext context) {}
+  void handleMeals(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return TabsScreen();
+        },
+      ),
+    );
+  }
+
+  void handleFilters(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return FiltersScreen();
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +49,25 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          buildTile(context, 'Meals', Icons.restaurant),
-          buildTile(context, 'Filters', Icons.settings),
+          buildTile(
+            context,
+            'Meals',
+            Icons.restaurant,
+            handleMeals,
+          ),
+          buildTile(
+            context,
+            'Filters',
+            Icons.settings,
+            handleFilters,
+          ),
         ],
       ),
     );
   }
 
-  ListTile buildTile(BuildContext context, String title, IconData iconData) {
+  ListTile buildTile(
+      BuildContext context, String title, IconData iconData, Function fnTap) {
     return ListTile(
       leading: Icon(
         iconData,
@@ -49,7 +81,7 @@ class MainDrawer extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onTap: () => handleTap(context),
+      onTap: () => fnTap(context),
     );
   }
 }
