@@ -20,6 +20,10 @@ class MealDetailsScreen extends StatelessWidget {
     required this.steps,
   }) : super(key: key);
 
+  void handlePressed(BuildContext context) {
+    Navigator.of(context).pop(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +41,16 @@ class MealDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: buildFloatingButton(context),
+    );
+  }
+
+  FloatingActionButton buildFloatingButton(BuildContext context) {
+    return FloatingActionButton(
+      child: const Icon(
+        Icons.delete,
+      ),
+      onPressed: () => handlePressed(context),
     );
   }
 

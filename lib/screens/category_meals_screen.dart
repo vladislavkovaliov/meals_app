@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/mocks_categories.dart';
+import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/widgets/meal_item.dart';
 
-class CategotyMealsScreen extends StatelessWidget {
+class CategotyMealsScreen extends StatefulWidget {
   final String categotyId;
   final String categoryTitle;
 
@@ -16,35 +17,63 @@ class CategotyMealsScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CategotyMealsScreen> createState() => _CategotyMealsScreenState();
+}
+
+class _CategotyMealsScreenState extends State<CategotyMealsScreen> {
+  late List<Meal> displayedMeals;
+  bool loadedInitData = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (!loadedInitData) {
+      displayedMeals = mockMeals
+          .where(
+            (x) => x.categories.contains(widget.categotyId),
+          )
+          .toList();
+      loadedInitData = true;
+    }
+
+    super.didChangeDependencies();
+  }
+
+  void removeItem(String mealId) {
+    setState(() {
+      displayedMeals.removeWhere((x) => x.id == mealId);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      title: Text(categoryTitle),
-      backgroundColor: categoryColor,
+      title: Text(widget.categoryTitle),
+      backgroundColor: widget.categoryColor,
     );
-
-    final meals = mockMeals
-        .where(
-          (x) => x.categories.contains(categotyId),
-        )
-        .toList();
 
     return Scaffold(
       appBar: appBar,
       body: ListView.builder(
         itemBuilder: (ctx, index) {
           return MealItem(
-            id: meals[index].id,
-            title: meals[index].title,
-            imageUrl: meals[index].imageUrl,
-            duration: meals[index].duration,
-            complexity: meals[index].complexity,
-            affordability: meals[index].affordability,
-            categoryColor: categoryColor,
-            ingredients: meals[index].ingredients,
-            steps: meals[index].steps,
+            id: displayedMeals[index].id,
+            title: displayedMeals[index].title,
+            imageUrl: displayedMeals[index].imageUrl,
+            duration: displayedMeals[index].duration,
+            complexity: displayedMeals[index].complexity,
+            affordability: displayedMeals[index].affordability,
+            categoryColor: widget.categoryColor,
+            ingredients: displayedMeals[index].ingredients,
+            steps: displayedMeals[index].steps,
+            removeItem: removeItem,
           );
         },
-        itemCount: meals.length,
+        itemCount: displayedMeals.length,
       ),
     );
   }

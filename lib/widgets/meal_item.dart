@@ -16,6 +16,8 @@ class MealItem extends StatelessWidget {
   final Complexity complexity;
   final Affordability affordability;
 
+  final Function removeItem;
+
   const MealItem({
     required this.id,
     required this.imageUrl,
@@ -26,6 +28,7 @@ class MealItem extends StatelessWidget {
     required this.categoryColor,
     required this.ingredients,
     required this.steps,
+    required this.removeItem,
     Key? key,
   }) : super(key: key);
 
@@ -43,7 +46,11 @@ class MealItem extends StatelessWidget {
           );
         },
       ),
-    );
+    ).then((mealId) {
+      if (mealId != null) {
+        removeItem(mealId);
+      }
+    });
   }
 
   String get complexityText {
