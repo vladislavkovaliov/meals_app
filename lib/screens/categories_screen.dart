@@ -7,10 +7,7 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: buildBody(),
-    );
+    return buildBody();
   }
 
   GridView buildBody() {
@@ -30,12 +27,6 @@ class CategoriesScreen extends StatelessWidget {
                 color: c.color,
               ))
           .toList(),
-    );
-  }
-
-  AppBar buildAppBar() {
-    return AppBar(
-      title: const Text('DeliMeals'),
     );
   }
 }

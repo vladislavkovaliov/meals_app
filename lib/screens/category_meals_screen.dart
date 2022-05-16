@@ -18,14 +18,15 @@ class CategotyMealsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      title: Text(
-        categoryTitle,
-      ),
+      title: Text(categoryTitle),
       backgroundColor: categoryColor,
     );
 
-    final meals =
-        mockMeals.where((x) => x.categories.contains(categotyId)).toList();
+    final meals = mockMeals
+        .where(
+          (x) => x.categories.contains(categotyId),
+        )
+        .toList();
 
     return Scaffold(
       appBar: appBar,
