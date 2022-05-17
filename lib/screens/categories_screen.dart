@@ -3,6 +3,8 @@ import 'package:meals_app/widgets/category_item.dart';
 import 'package:meals_app/mocks_categories.dart';
 
 class CategoriesScreen extends StatelessWidget {
+  static String routeName = '/categories';
+
   const CategoriesScreen({Key? key}) : super(key: key);
 
   @override

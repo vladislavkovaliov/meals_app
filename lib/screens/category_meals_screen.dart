@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/mocks_categories.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/widgets/meal_item.dart';
 
 class CategotyMealsScreen extends StatefulWidget {
-  final String categotyId;
-  final String categoryTitle;
+  static String routeName = '/category-meals';
 
-  final Color categoryColor;
+  final List<Meal> meals;
 
   const CategotyMealsScreen({
     Key? key,
-    required this.categotyId,
-    required this.categoryTitle,
-    required this.categoryColor,
+    required this.meals,
   }) : super(key: key);
 
   @override
@@ -32,9 +28,13 @@ class _CategotyMealsScreenState extends State<CategotyMealsScreen> {
   @override
   void didChangeDependencies() {
     if (!loadedInitData) {
-      displayedMeals = mockMeals
+      final routeArgs =
+          ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+      final categoryId = routeArgs['categoryId'] as String;
+
+      displayedMeals = widget.meals
           .where(
-            (x) => x.categories.contains(widget.categotyId),
+            (x) => x.categories.contains(categoryId),
           )
           .toList();
       loadedInitData = true;
@@ -51,9 +51,14 @@ class _CategotyMealsScreenState extends State<CategotyMealsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+    final categoryTitle = routeArgs['categoryTitle'] as String;
+    final categoryColor = routeArgs['categoryColor'] as Color;
+
     final appBar = AppBar(
-      title: Text(widget.categoryTitle),
-      backgroundColor: widget.categoryColor,
+      title: Text(categoryTitle),
+      backgroundColor: categoryColor,
     );
 
     return Scaffold(
@@ -67,7 +72,7 @@ class _CategotyMealsScreenState extends State<CategotyMealsScreen> {
             duration: displayedMeals[index].duration,
             complexity: displayedMeals[index].complexity,
             affordability: displayedMeals[index].affordability,
-            categoryColor: widget.categoryColor,
+            categoryColor: categoryColor,
             ingredients: displayedMeals[index].ingredients,
             steps: displayedMeals[index].steps,
             removeItem: removeItem,

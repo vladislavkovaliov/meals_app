@@ -1,37 +1,33 @@
 import 'package:flutter/material.dart';
 
 class MealDetailsScreen extends StatelessWidget {
-  final String id;
-  final String title;
-  final String imageUrl;
-
-  final Color categoryColor;
-
-  final List<String> ingredients;
-  final List<String> steps;
+  static String routeName = '/meal-details';
 
   const MealDetailsScreen({
     Key? key,
-    required this.id,
-    required this.title,
-    required this.categoryColor,
-    required this.imageUrl,
-    required this.ingredients,
-    required this.steps,
   }) : super(key: key);
 
   void handlePressed(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+    final id = routeArgs['id'] as String;
+
     Navigator.of(context).pop(id);
   }
 
   @override
   Widget build(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+    final ingredients = routeArgs['ingredients'] as List<String>;
+    final steps = routeArgs['steps'] as List<String>;
+
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            buildImage(15),
+            buildImage(context, 15),
             Column(
               children: [
                 ...buildIngredients(context, ingredients),
@@ -56,6 +52,9 @@ class MealDetailsScreen extends StatelessWidget {
 
   List<Widget> buildSteps(BuildContext context, List<String> steps) {
     final theme = Theme.of(context);
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+    final categoryColor = routeArgs['categoryColor'] as Color;
 
     return [
       Container(
@@ -139,14 +138,23 @@ class MealDetailsScreen extends StatelessWidget {
     ];
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+    final title = routeArgs['title'] as String;
+    final categoryColor = routeArgs['categoryColor'] as Color;
+
     return AppBar(
       title: Text(title),
       backgroundColor: categoryColor,
     );
   }
 
-  SizedBox buildImage(double border) {
+  SizedBox buildImage(BuildContext context, double border) {
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+    final imageUrl = routeArgs['imageUrl'] as String;
+
     return SizedBox(
       height: 300,
       width: double.infinity,

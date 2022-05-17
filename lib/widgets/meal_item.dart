@@ -33,19 +33,16 @@ class MealItem extends StatelessWidget {
   }) : super(key: key);
 
   void handleTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return MealDetailsScreen(
-            id: id,
-            title: title,
-            categoryColor: categoryColor,
-            imageUrl: imageUrl,
-            ingredients: ingredients,
-            steps: steps,
-          );
-        },
-      ),
+    Navigator.of(context).pushNamed(
+      MealDetailsScreen.routeName,
+      arguments: {
+        'id': id,
+        'title': title,
+        'categoryColor': categoryColor,
+        'imageUrl': imageUrl,
+        'ingredients': ingredients,
+        'steps': steps,
+      },
     ).then((mealId) {
       if (mealId != null) {
         removeItem(mealId);

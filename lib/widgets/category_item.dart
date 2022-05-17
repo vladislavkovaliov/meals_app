@@ -15,16 +15,13 @@ class CategoryItem extends StatelessWidget {
   }) : super(key: key);
 
   void handleTapCategory(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return CategotyMealsScreen(
-            categotyId: id,
-            categoryTitle: title,
-            categoryColor: color,
-          );
-        },
-      ),
+    Navigator.of(context).pushNamed(
+      CategotyMealsScreen.routeName,
+      arguments: {
+        'categoryId': id,
+        'categoryTitle': title,
+        'categoryColor': color,
+      },
     );
   }
 
