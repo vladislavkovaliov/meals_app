@@ -75,7 +75,6 @@ class _CategotyMealsScreenState extends State<CategotyMealsScreen> {
             categoryColor: categoryColor,
             ingredients: displayedMeals[index].ingredients,
             steps: displayedMeals[index].steps,
-            removeItem: removeItem,
           );
         },
         itemCount: displayedMeals.length,

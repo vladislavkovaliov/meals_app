@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> {
     'vegetarian': false,
   };
   List<Meal> avaliableMeals = mockMeals;
+  List<Meal> favoriteMeals = [];
 
   void setFilters(Map<String, bool> filtersData) {
     setState(() {
@@ -49,6 +50,25 @@ class _MyAppState extends State<MyApp> {
         return true;
       }).toList();
     });
+  }
+
+  void toggleFavoriteMeal(String mealId) {
+    final alreadyExistIndex = favoriteMeals.indexWhere((x) => x.id == mealId);
+
+    if (alreadyExistIndex >= 0) {
+      setState(() {
+        favoriteMeals.removeWhere((x) => x.id == mealId);
+      });
+    } else {
+      final meal = avaliableMeals.firstWhere((x) => x.id == mealId);
+      setState(() {
+        favoriteMeals.add(meal);
+      });
+    }
+  }
+
+  bool isFavoriteMeal(String id) {
+    return favoriteMeals.any((x) => x.id == id);
   }
 
   @override
@@ -78,11 +98,16 @@ class _MyAppState extends State<MyApp> {
               )),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => const TabsScreen(),
+        '/': (ctx) => TabsScreen(
+              favoriteMeals: favoriteMeals,
+            ),
         CategotyMealsScreen.routeName: (ctx) => CategotyMealsScreen(
               meals: avaliableMeals,
             ),
-        MealDetailsScreen.routeName: (ctx) => const MealDetailsScreen(),
+        MealDetailsScreen.routeName: (ctx) => MealDetailsScreen(
+              toggleFavoriteMeal: toggleFavoriteMeal,
+              isFavoriteMeal: isFavoriteMeal,
+            ),
         FiltersScreen.routeName: (ctx) => FiltersScreen(
               filters: filters,
               saveFilters: setFilters,

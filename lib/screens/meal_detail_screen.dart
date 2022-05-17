@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 class MealDetailsScreen extends StatelessWidget {
   static String routeName = '/meal-details';
 
+  final Function toggleFavoriteMeal;
+  final Function isFavoriteMeal;
+
   const MealDetailsScreen({
     Key? key,
+    required this.toggleFavoriteMeal,
+    required this.isFavoriteMeal,
   }) : super(key: key);
-
-  void handlePressed(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
-    final id = routeArgs['id'] as String;
-
-    Navigator.of(context).pop(id);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +39,15 @@ class MealDetailsScreen extends StatelessWidget {
   }
 
   FloatingActionButton buildFloatingButton(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+    final id = routeArgs['id'] as String;
+
     return FloatingActionButton(
-      child: const Icon(
-        Icons.delete,
+      child: Icon(
+        isFavoriteMeal(id) ? Icons.delete : Icons.star,
       ),
-      onPressed: () => handlePressed(context),
+      onPressed: () => toggleFavoriteMeal(id),
     );
   }
 
